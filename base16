@@ -85,7 +85,10 @@ class Theme
         "hexbgr" => to_hex_bgr(hex),
         "dhex" => to_dhex(hex),
         "rgb" => to_rgb(hex),
-        "srgb" => to_srgb(hex)
+        "srgb" => to_srgb(hex),
+
+        "grgb_hex" => to_grgb_hex(hex),
+        "grgb" => to_grgb(hex),
       }
     end
   end
@@ -155,6 +158,14 @@ class Theme
 
   def to_srgb(hex)
     hex.scan(/../).map {|color| color.to_i(16).to_f / 255 }
+  end
+
+  def to_grgb_hex(hex)
+    `./srgb2grgb #{hex}`
+  end
+
+  def to_grgb(hex)
+    to_srgb(to_grgb_hex(hex))
   end
 
   def split_by_slash(hex)
